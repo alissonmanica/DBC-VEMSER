@@ -1,0 +1,14 @@
+html, body, * {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0px;
+    padding: 0px;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.background-header {
+    background-color: red;
+}
