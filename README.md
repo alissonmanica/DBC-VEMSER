@@ -10,4 +10,5 @@ HTML & CSS {
 JavaScript {
     Adicionado exercicios da aula 01
     Adicionado exercicios da aula 02
+    Adicionado exercicios da aula 03
 }
