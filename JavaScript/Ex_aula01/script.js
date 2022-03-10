@@ -66,10 +66,11 @@ if(!isNaN(n1) && !isNaN(n2)) {
       resultado = (n1 * n2);
       break;
     case '/':
-      if(n1 !== 0 && n2 !== 0) {
+      if(n2 !== 0) {
         resultado = (n1 / n2);
       } else {
         alert('Erro! Escolha um número diferente de 0 para dividir!');
+        throw 'erro!'
       }
       break;
     default: 

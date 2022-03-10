@@ -77,19 +77,17 @@ for ( let cont = 1; cont <= 100; cont++) {
 // 	58
 // 	59
 // 	60 (aqui é para parar de imprimir)
-let fst = 0;
-let sec = 0;
+let contador = 0;
 
 let intervalo = setInterval(
                     function() {
-                        console.log(`${fst}${sec}`)
-                        sec++
-                        if (sec === 10) {
-                            sec = 0
-                            fst++
-                        } else if (fst === 6) {
-                            clearInterval(intervalo);
-                        }
+                        contador++
+                        contador < 10
+                        ? console.log(`0${contador}`)
+                        : console.log(contador);
+                        contador === 60
+                        ? clearInterval(intervalo)
+                        : null;
                     },1000
                 );
 
@@ -104,6 +102,7 @@ let intervalo = setInterval(
 // 	Utilize o laço DO...WHILE;
 let solicitUser;
 let resultUser = 0;
+let garantiaResultUser;
 let somaTotal = 0;
 
 do {
@@ -111,7 +110,8 @@ do {
 
     switch(solicitUser) {
         case 1: 
-            resultUser = parseFloat(prompt('Digite um número válido:'));
+            garantiaResultUser = parseFloat(prompt('Digite um número válido:'));
+            isNaN(garantiaResultUser) ? alert('Número inválido!') : resultUser = garantiaResultUser;
             break;
         case 2:
             alert(`O resultado da soma foi: ${somaTotal}`);
