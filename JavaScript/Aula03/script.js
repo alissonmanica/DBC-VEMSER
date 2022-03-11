@@ -43,13 +43,15 @@ console.log (limpaEspaco(stringPadrao).join(' '))
 // 3) Crie uma função de soma que recebe como parâmetro 2 números (imprime no console a soma deles) e uma callback function que seja 
 //    chamada caso algum dos números informados seja inválido.
 //    Esta função de Callback exibe somente a msg no console 'Algum número digitado foi inválido';
-function somaNumeros(n1 = 0, n2 = 0) {
+function erroSoma() {console.log('Algum número digitado foi inválido!')}
+
+function somaNumeros(n1 = 0, n2 = 0, callback) {
    let soma = n1 + n2;
-   function erroSoma() {console.log('Algum número digitado foi inválido!')}
-   !isNaN(soma) ? console.log(soma) : erroSoma();
+   
+   !isNaN(soma) ? console.log(soma) : callback();
 }
 
-somaNumeros(5, 5);
+somaNumeros(5, 5, erroSoma);
 
 
 

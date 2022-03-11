@@ -138,7 +138,7 @@ function adicionaNumerosAleatorios() {
   let variavelGerador;
 	do {
     variavelGerador = geradorNumeroAleatorio()
-    if (variavelGerador >= 14 && variavelGerador <= 50 && !(variavelGerador % 2 === 0) ||(variavelGerador % 12 === 0)) {
+    if (variavelGerador >= 14 && variavelGerador <= 50 && (variavelGerador % 2 !== 0) || (variavelGerador % 12 === 0)) {
       listaNumeral.push(variavelGerador)
     }
   } while (listaNumeral.length < 10)   
