@@ -13,4 +13,5 @@ JavaScript {
     Adicionado exercicios da aula 03
     Corrigido exercicios anteriores
     Adicionado exercicios da aula 04 e em Dupla, correção dos exercicios da aula 03
+    Adicionado home work da aula 05
 }
