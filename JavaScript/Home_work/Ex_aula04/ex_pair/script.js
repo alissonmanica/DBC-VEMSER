@@ -106,36 +106,14 @@ verificaVogaisOuConsoantes('Oi, tenho 5 anos de idade!!! ;D')
 //   // ex: imprimirCombinacoes('tri')
 //   => possiveis combinações da string "tri":  
 //   't', 'tr', 'ti', 'tri', 'tir', 'r', 'rt', 'ri', 'rit', 'rti', 'i', 'ir', 'it', 'irt', 'itr'
-function printCombinations(str) {
-    let arr = str.split('');
-    let arrCombinations = [];
-    let aux = '';
 
-    for(let i = 0; i < arr.length; i++) {
-      aux += arr[i];
-      arrCombinations.push(aux)
-      
-      for(let j = 0; j < arr.length; j++) {
-        if(i != j) {
-          aux += arr[j]
-          arrCombinations.push(aux)
-        }
-        
-      }
-      aux = arr[i]
-      for(let k = (arr.length - 1); k >= 0; k--) {
-        if(i != k) {
-          aux += arr[k]
-          arrCombinations.push(aux)
-        }
-        
-      }
+const montarCombinacoes = (texto) => {
+  const caracteres = texto.split(''); // lista dos caracteres, nesse caso ['t', 'r', 'i', 'o']
+  const combinacoes = caracteres.slice(); // já inicializa com uma cópia dos caracteres
 
-      aux = '';
-    }
-
-    return arrCombinations;
-
+  for(let i = 0; i < caracteres.length; i++) {
+    verificarCombinacoes(caracteres[i], combinacoes);
   }
 
-  console.log(printCombinations("bah"));
+  return combinacoes;
+}
