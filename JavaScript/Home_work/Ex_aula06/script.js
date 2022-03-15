@@ -178,13 +178,14 @@ class Validacoes {
         }
     };
 
-    validaColaboradorSemPonto = () => {
-        if(listaColaboradores.find( e => e.marcacoesPonto.length === 0)) {
-            return true;
+
+    validaPontosMarcados = (listaDePonto) => {
+        if(listaDePonto.length === 0) {
+            return true
         } else {
-            return false;
+            return false
         }
-    };
+    }
 }
 
 const validator = new Validacoes();
@@ -194,11 +195,11 @@ const validator = new Validacoes();
 
 //Função imprime colaboradores sem ponto marcado
 const colabSemPonto = () => {
-    if(validator.validaColaboradorSemPonto) {
-        let listaSemPonto = listaColaboradores.filter( e => e.marcacoesPonto.length === 0);
-        console.table(listaSemPonto)
+    let listaSemPonto = listaColaboradores.filter( e => e.marcacoesPonto.length === 0);
+    if(validator.validaPontosMarcados(listaSemPonto)) {
+        alert('Todos os colaboradores marcaram o ponto!')
     } else {
-        console.log('Nenhum colaborador está sem ponto marcado!')
+        console.table(listaSemPonto)
     }
 }
 
