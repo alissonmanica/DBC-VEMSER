@@ -1,8 +1,21 @@
 const listaPai = document.getElementById('lista')
 
 const campoInput = document.getElementById('campoinput')
-// let texto = document.createTextNode(campoInput.value)
-console.log(campoInput.value)
+
+
+let listaCount = 0;
+
+const tituloDaLista = () => {
+    const tituloLista = document.getElementById('titulo-lista');
+    if (listaCount === 0) {
+        tituloLista.textContent = 'Nenhum "To Do" cadastrado ainda.';
+    } else {
+        tituloLista.textContent = 'To Do';
+    }
+}
+
+
+
 
 
 const excluirElemento = (li) => {
@@ -12,6 +25,8 @@ const excluirElemento = (li) => {
     iconeExcluir.setAttribute('class', "fa-solid fa-trash")
     li.appendChild(botaoExcluir)
     botaoExcluir.addEventListener('click', () => {
+        --listaCount
+        tituloDaLista()
         li.remove()
     })
 }
@@ -32,31 +47,34 @@ const confirmarElemento = (li) => {
 
 
 
+
+
 const criarElementosParaLista = () => {
     let texto = document.createTextNode(campoInput.value)
     let p = document.createElement('p')
     const elementoDaLista = document.createElement('li')
-    listaPai.appendChild(elementoDaLista)
-    elementoDaLista.classList.add('elementodalista')
-    elementoDaLista.setAttribute('id', 'elementodalista')
-    let confirma = confirmarElemento(elementoDaLista)
-    p.appendChild(texto)
-    elementoDaLista.appendChild(p)
-    let excluir = excluirElemento(elementoDaLista)
-    // elementoDaLista.appendChild(botaoExcluir)
-    // elementoDaLista.innerHTML = `
-    // <button id="btn-confirm"><i class="fa-solid fa-check"></i></button>
-    // <p>${conteudo}</p>
-    // <button id="btn-cancela"><i class="fa-solid fa-trash"></i></button>
-    // `
-    // listaPai.appendChild(elementoDaLista)
+    if (texto.textContent === "") {
+        alert('Erro! Digite algo na caixa de texto!')
+    } else {
+        ++listaCount
+        tituloDaLista()
+        listaPai.appendChild(elementoDaLista)
+        elementoDaLista.classList.add('elementodalista')
+        elementoDaLista.setAttribute('id', 'elementodalista')
+        let confirma = confirmarElemento(elementoDaLista)
+        p.appendChild(texto);
+        elementoDaLista.appendChild(p)
+        let excluir = excluirElemento(elementoDaLista)
+    }
 }
+
+
 
 const formulario = document.getElementById('formulario')
 const clicaBotao = formulario.addEventListener('submit', evento => {
     evento.preventDefault()
     criarElementosParaLista()
+    console.log(listaCount)
 }) 
-
 
 

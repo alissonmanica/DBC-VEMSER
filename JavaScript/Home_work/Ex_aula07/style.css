@@ -49,6 +49,20 @@
     transform: scale(1.4);
 }
 
+
+.button-input {
+    border: none;
+    border-radius: 100%;
+    padding: 6px 10px;
+    background-color: rgb(87, 148, 240);
+    color: white;
+}
+
+.button-input:hover {
+    transform: scale(1.4);
+}
+
+
 .lista {
     display: flex;
     flex-direction: column;
@@ -78,4 +92,8 @@
 .lista button {
     background: none;
     border: none;
+}
+
+.fa-solid:hover {
+    transform: scale(1.4);
 }
