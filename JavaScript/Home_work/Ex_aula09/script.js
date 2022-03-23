@@ -205,6 +205,7 @@ const validarCadastro = (event) => {
 
   if(cadastroValido) {
     cadastrarUsuario(event);
+    irPara('cadastro', 'login')
   }
 }
 

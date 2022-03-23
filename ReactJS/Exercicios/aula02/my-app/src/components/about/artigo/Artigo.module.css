@@ -1,0 +1,8 @@
+.artigo {
+    background-color: rgb(80, 7, 7);
+    width: 1100px;
+    border: 10px solid rgb(189, 156, 8);
+    border-radius: 8px;
+    color: rgb(13, 197, 136);
+    margin: 40px 0;
+}
