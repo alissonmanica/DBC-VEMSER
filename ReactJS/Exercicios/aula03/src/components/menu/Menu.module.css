@@ -1,0 +1,10 @@
+.nav {
+    width: 600px;
+}
+
+
+.ul {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+}
