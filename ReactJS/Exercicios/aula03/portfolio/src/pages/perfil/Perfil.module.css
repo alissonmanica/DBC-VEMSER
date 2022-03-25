@@ -1,0 +1,50 @@
+.perfil {
+    background: linear-gradient(to bottom right, #343a40, #3c6e71);
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+.perfil img {
+    width: 300px;
+    height: 300px;
+    border: 8px solid rgb(134, 131, 131);
+    border-radius: 100%;
+    -webkit-box-shadow: -1px 4px 29px 8px rgba(0,0,0,0.38);
+    -moz-box-shadow: -1px 4px 29px 8px rgba(0,0,0,0.38);
+    box-shadow: -1px 4px 29px 8px rgba(0,0,0,0.38);
+    display: flex;
+    flex-direction: column;
+}
+
+.name {
+    color: #468faf;
+    font-size: 26px;
+    height: 70%;
+}
+
+.perfil h3 {
+    color: #ff7d00;
+}
+
+.desc {
+    padding-top: 24px;
+    color: #c9184a;
+    font-size: 20px;
+    text-align: start;
+    width: 80%;
+    padding-left: 76px;
+    font-weight: bold;
+}
+
+.desc p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon {
+    color: rgb(71, 133, 214);
+}

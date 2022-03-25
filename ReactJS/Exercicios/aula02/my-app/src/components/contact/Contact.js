@@ -5,8 +5,8 @@ import Select from "./inputs/Select";
 import styles from "./Contact.module.css"
 import Label from './inputs/Label';
 
-const Contact = () => {
-    const Salvar = (e) => {
+function Contact() {
+    function Salvar(e) {
         e.preventDefault();
         console.log(username, email)
     }

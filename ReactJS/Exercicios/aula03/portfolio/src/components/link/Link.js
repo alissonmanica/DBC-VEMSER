@@ -3,7 +3,7 @@ import style from "./Link.module.css"
 
 function FuncaoLink({para, item}) {
     return (
-        <Link className={style.link} to={para}>{item}</Link>
+        <Link className={style.linkMenu} to={para}>{item}</Link>
     )
 }
 

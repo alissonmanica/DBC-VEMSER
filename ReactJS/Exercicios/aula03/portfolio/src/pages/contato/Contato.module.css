@@ -1,0 +1,16 @@
+.contato {
+    background: linear-gradient(to bottom right, #343a40, #7a2b23);
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.contato form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 30px;
+}

@@ -1,35 +1,24 @@
-import {useEffect, useState} from 'react';
-import axios from 'axios';
-
-function Perfil() {
-    const [userFoto, setUserFoto] = useState()
-    const [userName, setUserName] = useState()
-    const [userEmail, setUserEmail] = useState()
-    const [userBio, setUserBio] = useState()
-    const [userCompany, setUserCompany] = useState()
-    const [userLocation, setUserLocation] = useState()
+import styles from "./Perfil.module.css";
+import { FaConnectdevelop } from "react-icons/fa";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 
-    async function setup() {
-        const {data} = await axios.get('https://api.github.com/users/alissonmanica');
-        setUserFoto(data.avatar_url)
-        setUserName(data.name)
-        setUserEmail('alissonmanica.aai@gmail.com')
-        setUserBio(data.bio)
-    }
-    
-    
-    useEffect(() => {
-        setup();
-    }, []);
+function Perfil({data}) {
+    const {avatar_url ,name, bio, company, location} = data
     return (
-    <div>
+    <div className={styles.perfil}>
         <div>
-        <img src={userFoto} alt="imagem-perfil" />
+            <img className={styles.img} src={avatar_url} alt="imagem-perfil"/>
+            <div className={styles.desc}>
+                <p><FaConnectdevelop className={styles.icon} />{company}</p>
+                <p><FaMapMarkerAlt className={styles.icon} />{location}</p>
+            </div>
         </div>
-        <div>
-            {userName}
-            {userBio}
+        <div className={styles.name}>
+            <h1>{name}</h1>
+            <div>
+                <h3 className={styles.h3}>{bio}</h3>
+            </div>
         </div>
     </div>
     );

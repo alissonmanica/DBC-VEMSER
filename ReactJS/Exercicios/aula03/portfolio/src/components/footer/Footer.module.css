@@ -1,0 +1,18 @@
+.footerIcons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1b3a4b;
+    height: 50px;
+    font-size: 30px;
+    gap: 50px;
+}
+
+.footerIcons a {
+    color: rgb(211, 43, 94);
+}
+
+.footerIcons a:hover {
+    transform: scale(1.2);
+    color: rgb(39, 219, 219);
+}

@@ -3,8 +3,8 @@ import style from "./Menu.module.css"
 
 function Menu() {
     return (
-    <nav className={style.nav}>
-        <ul className={style.ul}>
+    <nav className={style.menuNav}>
+        <ul className={style.menuUl}>
            <li>
                <FuncaoLink para="/" item="Perfil" />
             </li>            

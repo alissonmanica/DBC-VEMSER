@@ -1,10 +1,14 @@
-.nav {
-    width: 600px;
+.menuNav {
+    width: 100%;
 }
 
 
-.ul {
+.menuUl {
     display: flex;
     list-style: none;
     justify-content: space-around;
+}
+
+.menuUl li:hover {
+    transform: scale(1.2);
 }
