@@ -1,9 +1,7 @@
 import styles from "./Repositorio.module.css";
-import {useEffect, useState} from 'react';
 
 function Repositorio({repos}) {
    
-console.log(repos)
     return (
         <div className={styles.reposPage}>
             <h1>Repositórios</h1>

@@ -8,14 +8,12 @@ function Contato() {
 
     const Enviar = (e) => {
         e.preventDefault();
-        console.log(username, email)
         alert(`Ola ${username} retornarei o contato pelo e-mail ${email}, Obrigado!`)
     }
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
 
-    console.log(username, email)
     return (
         <div className={styles.contato}>
              <form onSubmit={Enviar}>
