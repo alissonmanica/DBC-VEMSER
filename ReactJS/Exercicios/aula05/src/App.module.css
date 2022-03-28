@@ -1,0 +1,8 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(to bottom right, #25424b, #375526);
+  min-height: 667px;
+  color: rgb(186, 226, 236);
+}
