@@ -5,8 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 
 function Login() {
 
-    const {handleLogin, token} = useContext(AuthContext)
-    console.log(token)
+    const {handleLogin} = useContext(AuthContext)
 
   return (
     <div>
