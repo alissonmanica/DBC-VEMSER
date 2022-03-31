@@ -4,9 +4,11 @@ import './App.css';
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import AuthProvider from "./context/AuthContext";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import User from "./pages/User";
+import Address from "./pages/address/Address";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import NotFound from "./pages/NotFound";
+import Users from "./pages/users/Users";
 
 function App() {
   return (
@@ -15,9 +17,11 @@ function App() {
         <AuthProvider>
         <Header />
           <Routes>
+            <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/user" element={<User />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/address" element={<Address />} />
           </Routes>
         <Footer />
         </AuthProvider>

@@ -1,14 +1,23 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
+import { useNavigate } from 'react-router-dom';
 
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
+import style from './Login.module.css'
 
 function Login() {
+  const navigate = useNavigate()
+  const {handleLogin, token} = useContext(AuthContext)
 
-    const {handleLogin} = useContext(AuthContext)
+  useEffect(() => {
+    if (token) {
+      navigate('/users')
+    }
+  },[])
 
+    
   return (
-    <div>
+    <div className={style.login}>
         <h1>Login</h1>
         <Formik
       initialValues={{

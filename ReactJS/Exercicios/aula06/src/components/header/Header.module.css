@@ -1,0 +1,13 @@
+.headerPage {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1D1E20;
+    padding: 0 20px;
+}
+
+.headerPage button {
+    height: 26px;
+    border-radius: 4px;
+}

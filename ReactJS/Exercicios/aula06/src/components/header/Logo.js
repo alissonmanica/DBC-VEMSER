@@ -1,7 +1,8 @@
+import style from './Logo.module.css'
 
 function Logo() {
   return (
-    <div>Logo</div>
+    <div className={style.logo}>Logo</div>
   )
 }
 

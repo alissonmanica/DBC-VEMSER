@@ -1,11 +1,12 @@
 import React from 'react'
 import Menu from '../header/Menu'
+import style from './Footer.module.css'
 
 function Footer() {
   return (
-    <footer>
-        <Menu />
+    <footer className={style.footerPage}>
         <small>Copyright: VEM SER DBC</small>
+        <Menu />
     </footer>
   )
 }

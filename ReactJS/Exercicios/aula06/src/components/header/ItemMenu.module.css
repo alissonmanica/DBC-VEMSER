@@ -1,0 +1,23 @@
+.itemMenu {
+    width: 300px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.itemMenu li {
+    list-style-type: none;
+}
+
+.itemMenu li a {
+    text-decoration: none;
+    color: white;
+}
+
+.itemLogin {
+    list-style-type: none;
+}
+
+.itemLogin li a {
+    text-decoration: none;
+    color: white;
+}
