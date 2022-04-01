@@ -2,40 +2,47 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup' 
+import MaskedInput from "react-text-mask";
+
 
 import { AuthContext } from '../../context/AuthContext';
 import apiCep from '../../components/apiCep';
-import styles from './Address.module.css'
+import './Address.css'
+import Error from '../../components/Error';
 
 function Address() {
 
 const navigate = useNavigate()
 const {token} = useContext(AuthContext)
 const [cep, setCep] = useState('')
-const [address, setAddress] = useState({})
 
-const {localidade, logradouro, bairro, ddd, uf} = address
+const maskTelefone = [
+   /[0-9]/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/
+]
+
+const maskDDD = [
+  '(', /[0-9]/, /\d/, ')'
+]
 
 function maskCEP(value) {
   return value.replace(/\D/g, "").replace(/^(\d{5})(\d{3})+?$/, "$1-$2");
 };
 
 
-function callCep(values) {
-    values.cep = maskCEP(cep)
-    values.rua = logradouro;
-    values.bairro = bairro
-    values.cidade = localidade
-    values.estado = uf
-    values.ddd = ddd
-}
 
 async function getCep({values}) {
   try {
-    const {data} = await apiCep.get(`/${cep}/json/`)
-    setAddress(data)
-    callCep(values)
+    const {data} = await apiCep.get(`/${cep}/json/`);
+    const {localidade, logradouro, bairro, ddd, uf} = data
+    console.log(data)
+    values.cep = maskCEP(cep)
+    values.rua = logradouro;
+    values.bairro = bairro;
+    values.cidade = localidade;
+    values.estado = uf;
+    values.ddd = ddd;
     } catch (error) {
+      <Error />
       console.log(error)
     }
   }
@@ -59,12 +66,12 @@ async function getCep({values}) {
     bairro: Yup.string().required('Campo obrigatório'),
     cidade: Yup.string().required('Campo obrigatório'),
     estado: Yup.string().required('Campo obrigatório'),
-    ddd: Yup.string().min(2, 'Campo tem que conter 2 digitos').max(2, 'Campo só pode conter 2 digitos').required('Campo obrigatório'),
-    telefone: Yup.string().min(8, 'Campo tem que conter 8 digitos').max(9, 'Campo só pode conter 8 digitos').required('Campo obrigatório'),
+    ddd: Yup.string().required('Campo obrigatório'),
+    telefone: Yup.string().min(9, 'Campo tem que conter no minimo 9 digitos').required('Campo obrigatório'),
   });
 
   return (
-    <div className={styles.address}>
+    <div className={"Address"}>
       <h1>Address</h1>
       <Formik
       initialValues={{
@@ -78,7 +85,7 @@ async function getCep({values}) {
         telefone: '',
       }}
       validationSchema={formSchema}
-      onSubmit={(values) => {
+      onSubmit={async (values) => {
         alert(JSON.stringify(values, null, 2));
       }}
     >
@@ -122,13 +129,43 @@ async function getCep({values}) {
 
         <div>
           <label htmlFor="ddd">DDD: </label>
-          <Field id="ddd" name="ddd" placeholder="Digite o DDD" />
+          <Field name="ddd" render={({ field }) => (
+                <MaskedInput
+                  {...field}
+                  mask={maskDDD}
+                  id="ddd"
+                  placeholder="digite o DDD"
+                  type="text"
+                  onChange={values.handleChange}
+                  onBlur={values.handleBlur}
+                  className={
+                    values.errors.phone && values.touched.phone
+                      ? "text-input error"
+                      : "text-input"
+                  }
+                />
+              )} />
           <ErrorMessage name='ddd' />
         </div>
 
         <div>
           <label htmlFor="telefone">Telefone: </label>
-          <Field id="telefone" name="telefone" placeholder="Digite seu Telefone" />  
+          <Field name="telefone" render={({ field }) => (
+                <MaskedInput
+                  {...field}
+                  mask={maskTelefone}
+                  id="telefone"
+                  placeholder="digite seu Telefone"
+                  type="text"
+                  onChange={values.handleChange}
+                  onBlur={values.handleBlur}
+                  className={
+                    values.errors.phone && values.touched.phone
+                      ? "text-input error"
+                      : "text-input"
+                  }
+                />
+              )} />  
           <ErrorMessage name='telefone' />
         </div>
 

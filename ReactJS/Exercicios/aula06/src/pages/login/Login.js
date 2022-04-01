@@ -3,7 +3,7 @@ import { Formik, Field, Form } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../../context/AuthContext';
-import style from './Login.module.css'
+import './Login.css'
 
 function Login() {
   const navigate = useNavigate()
@@ -17,7 +17,7 @@ function Login() {
 
     
   return (
-    <div className={style.login}>
+    <div className={"Login"}>
         <h1>Login</h1>
         <Formik
       initialValues={{
@@ -37,7 +37,7 @@ function Login() {
         <label htmlFor="senha">Senha</label>
         <Field id="senha" type="password" name="senha" placeholder="Senha" />
 
-        <button type="submit">Submit</button>
+        <button type="Logar">Submit</button>
       </Form>
     </Formik>
     </div>

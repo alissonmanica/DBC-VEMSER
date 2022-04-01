@@ -1,0 +1,44 @@
+.Users {
+    min-height: 550px;
+}
+
+.Users > main {
+    display: grid;
+    grid-template-columns: 350px 350px 350px;
+    justify-content: space-evenly;
+    gap: 30px 4px;
+    margin: 30px 10px;
+}
+
+.Users main > div {
+    color: black;
+    border: 2px solid black;
+    border-radius: 8px;
+    text-align: start;
+    padding: 8px;
+    background-color: rgb(175, 174, 174)
+}
+
+.Users main div button {
+    background-color: rgb(179, 95, 95);
+    color: white;
+}
+
+.Users main div button:Hover {
+    transform: scale(1.1);
+    background-color: rgb(207, 158, 53);
+    color: black;
+}
+
+.Users > a {
+    text-decoration: none;
+    color: white;
+    border: 1px solid black;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: rgb(50, 80, 114);
+}
+
+.Users > a:Hover {
+    background-color: rgb(81, 104, 44);
+}

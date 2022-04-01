@@ -1,12 +1,12 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import api from "../components/api";
 
 export const AuthContext = createContext()
 
 function AuthProvider({children}) {
 const [loading, setLoading] = useState(true)
-const [pessoas, setPessoas] = useState([])
 const [error, setError] = useState(false)
 const token = localStorage.getItem('token')
 
@@ -35,31 +35,6 @@ const navigate = useNavigate()
             }
         }
 
-        function isLogado() {
-            if (!token) {
-                navigate('/login');
-                setLoading(true);
-            } 
-        }
-
-        function Logado() {
-            if (token) {
-                navigate('/user')
-            }
-        }
-
-        async function getPessoas() {
-            try {
-                const {data} = await api.get('/pessoa');
-                setPessoas(data);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false)
-                setError(true)
-                console.log(error);
-            }
-        }
-
 
     return (
         <AuthContext.Provider value={
@@ -67,9 +42,6 @@ const navigate = useNavigate()
                 handleLogin,
                 handleLogout,
                 token,
-                pessoas,
-                getPessoas,
-                isLogado,
                 loading,
                 error,
                 navigate,
