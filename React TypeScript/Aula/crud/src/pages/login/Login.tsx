@@ -22,7 +22,6 @@ function Login() {
   const {handleLogin} = useContext<any>(AuthContext);
   const navigate = useNavigate()
   const [passValue, setPassValue] = useState(true)
-  const [typePass, setTypePass] = useState('password')
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -57,10 +56,10 @@ function Login() {
           </DivForm>
           <DivForm>
             <LabelStyled htmlFor="senha">Senha</LabelStyled>
-            <Field as={InputStyled} name="senha" id="senha" type={typePass} placeholder="Digite a sua senha" />
+            <Field as={InputStyled} name="senha" id="senha" type={passValue ? 'password' : 'text'} placeholder="Digite a sua senha" />
             {passValue ?
-              <AiFillEyeInvisible onClick={() => (setPassValue(false), setTypePass('text'))} />
-              : <AiFillEye onClick={() => (setPassValue(true), setTypePass('password'))} />
+              <AiFillEyeInvisible onClick={() => setPassValue(false)} />
+              : <AiFillEye onClick={() => setPassValue(true)} />
             }
           </DivForm>
           <ButtonStyled type='submit'>Entrar</ButtonStyled>
