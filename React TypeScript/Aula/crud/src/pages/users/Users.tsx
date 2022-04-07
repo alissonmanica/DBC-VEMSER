@@ -55,7 +55,7 @@ function Users() {
             <EachList>Data de Nascimento</EachList>
           </HeadList>
           {people.map(user => (
-            <InfoUsers>
+            <InfoUsers key={user.idPessoa}>
               <EachDesc>{user.nome}</EachDesc>
               <EachDesc>{user.email}</EachDesc>
               <EachDesc>{cpfFormat(user.cpf)}</EachDesc>

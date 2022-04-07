@@ -2,6 +2,7 @@ import {FC, createContext, useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LoginDTO } from '../model/LoginDTO';
 import api from '../api';
+import Loading from '../components/Loading';
 
 export const AuthContext = createContext({})
 
@@ -49,7 +50,7 @@ const AuthProvider: FC<any>= ({children}) => {
     }
 
   if (loading) {
-    return (<h1>Loading...</h1>)
+    return (<Loading />)
   }
 
   return (
