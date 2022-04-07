@@ -1,13 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import Loading from "../../components/Loading";
 
 function Address() {
-  const {isLogado} = useContext<any>(AuthContext);
-  
+  const {notLoged} = useContext<any>(AuthContext);
+  const [loading, setLoading] = useState(true)  
+
   useEffect(() => {
-    isLogado();
+    notLoged();
+    setLoading(false)
   }, []);
   
+  if (loading) {
+    return (<Loading />)
+  }
+
   return (
     <div>Address</div>
   )

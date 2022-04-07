@@ -6,15 +6,29 @@ import api from '../api';
 export const AuthContext = createContext({})
 
 const AuthProvider: FC<any>= ({children}) => {
-  const token = localStorage.getItem('token')
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [isToken, setIsToken] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      api.defaults.headers.common['Authorization'] = token;
+      setIsToken(true);
+    } else {
+      navigate('/login')
+    }
+    setLoading(false)
+  }, []);
 
   const handleLogin = async(user: LoginDTO) => {
     try {
       const {data} = await api.post('/auth', user);
       api.defaults.headers.common['Authorization'] = data;
       localStorage.setItem('token', data);
-      navigate('/')
+      setIsToken(true)
+      navigate('/');
+      setLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -22,22 +36,24 @@ const AuthProvider: FC<any>= ({children}) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login')
+    setIsToken(false)
+    navigate('/login');
+    setLoading(false)
   }
 
-  const isLogado = () => {
-    if (!token) {
-      navigate('/login')
+  const notLoged = () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        navigate('/login');
+      }
     }
-  }
 
-  useEffect(() => {
-    isLogado()
-  }, [])
-  
+  if (loading) {
+    return (<h1>Loading...</h1>)
+  }
 
   return (
-    <AuthContext.Provider value={{handleLogin, handleLogout, isLogado, token}}>
+    <AuthContext.Provider value={{handleLogin, handleLogout, notLoged, isToken}}>
       {children}
     </AuthContext.Provider>
   )
