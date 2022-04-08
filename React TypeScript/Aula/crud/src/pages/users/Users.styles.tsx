@@ -40,6 +40,7 @@ export const HeadList = styled.div`
 export const EachList = styled.p`
   color: #9FA2B4;
   width: 200px;
+  font-size: 14px;
 `;
 
 export const InfoUsers = styled.div`
@@ -51,4 +52,5 @@ export const InfoUsers = styled.div`
 
 export const EachDesc = styled.p`
   width: 200px;
+  font-size: 14px;
 `;
