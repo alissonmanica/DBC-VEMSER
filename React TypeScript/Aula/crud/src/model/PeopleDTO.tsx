@@ -1,9 +1,9 @@
 export interface PeopleDTO {
   pessoa: {
-    idPessoa: number,
-    nome: string,
-    email: string,
-    cpf: string,
-    dataNascimento: string
+    idPessoa?: number | null,
+    nome: string | null,
+    email: string | null,
+    cpf: string | null,
+    dataNascimento: string | null
   }[]
 }

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as Yup from 'yup';
 
@@ -11,11 +12,8 @@ import {
   HeadList,
   EachList,
   EachDesc,
-  DivButton,
   InfoUsers,
   DivFormik,
-  ButtonDelete,
-  ButtonUpdate,
   ButtonStyled,
   DivButtonForm,
   ContainerForm,
@@ -23,6 +21,7 @@ import {
 } from "./Address.styles"
 
 import {
+  DivButton,
   TitleUsers,
   TableUsers,
   ContainerUsers,
@@ -67,9 +66,12 @@ const SignupSchema = Yup.object().shape({
 });
 
 function Address() {
+  const navigate = useNavigate()
   const {notLoged} = useContext<any>(AuthContext);
   const [loading, setLoading] = useState(true);
   const [address, setAddress] = useState<AddressDTO['address']>([])
+  const [buttonName, setButtonName] = useState('Cadastrar')
+  const [addressAlt, setAddressAlt] = useState({})
 
   const getAddress = async (values: EnderecoDTO, setFieldValue: any) => {
     try {
@@ -110,7 +112,9 @@ function Address() {
       const {data} = await api.get('endereco')
       setAddress(data)
       console.log(address)
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
   }
@@ -124,10 +128,19 @@ function Address() {
     }
   }
 
+  const getInputAddress = (id: number) => {
+    setButtonName('Atualizar')
+    setAddressAlt(address.filter(item => item.idEndereco === id))
+    console.log(addressAlt)
+  }
+  
+  const altFormik = (FormikProps: any) => {
+
+  }
+
   useEffect(() => {
     notLoged();
     getAddressApi()
-    setLoading(false)
   }, []);
   
   if (loading) {
@@ -240,9 +253,8 @@ function Address() {
           </ContainerForm>
 
             <DivButtonForm>
-              <ButtonStyled type="submit">Cadastrar</ButtonStyled>
+              <ButtonStyled type="submit">{buttonName}</ButtonStyled>
             </DivButtonForm>
-
         </Form>
         )}
       </Formik>
@@ -269,8 +281,8 @@ function Address() {
               <EachDesc>{add.pais}</EachDesc>
               <EachDesc>{add.tipo}</EachDesc>
               <DivButton>
-                <ButtonUpdate>Atualizar</ButtonUpdate>
-                <ButtonDelete type="button" onClick={() => deleteAddress(add.idEndereco)}>Deletar</ButtonDelete>
+                {/* <ButtonUpdate type="button" onClick={() => getInputAddress(add.idEndereco)}>Atualizar</ButtonUpdate>
+                <ButtonDelete type="button" onClick={() => deleteAddress(add.idEndereco)}>Deletar</ButtonDelete> */}
               </DivButton>
             </InfoUsers>
           ))}

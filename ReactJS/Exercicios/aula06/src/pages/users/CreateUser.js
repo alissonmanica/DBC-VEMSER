@@ -16,7 +16,6 @@ import Loading from '../../components/Loading';
 import Error from '../../components/Error';
 
 function CreateUser() {
-  const {token} = useContext(AuthContext)
   const {buttonName, setButtonName, loading, setLoading} = useContext(UserContext)
   const [dataUser, setDataUser] = useState({})
   const [dataNascimentoPessoa, setDataNascimentoPessoa] = useState('')

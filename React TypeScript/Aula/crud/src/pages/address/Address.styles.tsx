@@ -62,26 +62,3 @@ export const LogradouroDesc = styled.p`
   width: 160px;
   font-size: 14px;
 `;
-
-export const DivButton = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ButtonUpdate = styled.button`
-  width: 120px;
-  background-color: #5db2f8;
-
-  :hover{
-    background-color: #4eaf4e;
-  }
-`;
-
-export const ButtonDelete = styled.button`
-  width: 120px;
-  background-color: #f55151;
-
-  :hover {
-    background-color: orange;
-  }
-`;

@@ -37,9 +37,9 @@ const AuthProvider: FC<ReactNode>= ({children}) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsToken(false)
+    setIsToken(false);
     navigate('/login');
-    setLoading(false)
+    setLoading(false);
   }
 
   const notLoged = () => {
