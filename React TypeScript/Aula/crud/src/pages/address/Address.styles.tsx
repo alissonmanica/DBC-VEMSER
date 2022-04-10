@@ -23,17 +23,6 @@ export const DivButtonForm = styled.div`
   width: 100%;
 `;
 
-export const ButtonStyled = styled.button`
-  width: 200px;
-  height: 30px;
-  margin: 20px 0;
-  background-color: #3751FF;
-  cursor: pointer;
-
-  :hover {
-    background-color: #4242cc;
-  }
-`;
 
 export const HeadList = styled.div`
   display: grid;

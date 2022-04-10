@@ -1,7 +1,7 @@
 export interface PessoaDTO {
   idPessoa?: number | null,
-  nome: string | null,
+  nome: string,
   email: string | null,
-  cpf: string | null,
-  dataNascimento: string | null
+  cpf: any,
+  dataNascimento: any
 }

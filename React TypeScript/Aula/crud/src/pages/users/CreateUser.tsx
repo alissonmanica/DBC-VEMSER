@@ -1,17 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import MaskedInput from "react-text-mask";
 import moment from 'moment';
-
 import * as Yup from 'yup' 
-import api from '../../api';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { PessoaDTO } from '../../model/PessoaDTO';
 import { UserContext } from '../../context/UserContext';
 import { AuthContext} from '../../context/AuthContext'
+import api from '../../api';
 import Loading from '../../components/Loading';
 import {
   DivField,
@@ -31,7 +29,6 @@ function CreateUser() {
   const {nome, dataNascimento, email, cpf}: any = dataUser
 
   const {id} = useParams()
-
   const navigate = useNavigate()
 
   const maskCPF = [
@@ -50,6 +47,9 @@ function CreateUser() {
           Notify.success('Usuário cadastrado com sucesso!', {
             timeout: 2000
           });
+          setTimeout(() => {
+            navigate('/users')
+          }, 2000);
         } catch (error) {
             console.log(error)
             Notify.failure('Erro ao cadastrar usuário!', {
@@ -76,6 +76,9 @@ function CreateUser() {
       Notify.success('Usuário atualizado com sucesso!', {
         timeout: 2000
       });
+      setTimeout(() => {
+        navigate('/users')
+      }, 2000);
     } catch (error) {
       console.log(error)
       Notify.failure('Erro ao atualizar usuário!', {
@@ -105,6 +108,7 @@ function CreateUser() {
     .required('Campo obrigatório'),
 
     email: Yup.string()
+    .email()
     .required('Campo obrigatório'),
 
     nome: Yup.string()
@@ -127,36 +131,31 @@ function CreateUser() {
         nome: '',
       }}
       validationSchema={formSchema}
-      onSubmit={(values) => {
-        let formataCPF = values.cpf.replaceAll('.', '')
-        let novoCPF = formataCPF.replace('-','');
-        values.cpf = novoCPF
-        let dataFormatada = values.dataNascimento.replaceAll('/', '-')
-        dataFormatada = moment(dataFormatada, 'DD/MM/YYYY').format('YYYY-MM-DD');
-        values.dataNascimento = dataFormatada
-        if (buttonName === 'Atualizar') {
-          const userAlterado = {
-            cpf: values.cpf,
-            dataNascimento: values.dataNascimento,
-            email: values.email,
-            nome: values.nome,
-          }
-          putUser(userAlterado)
-          setTimeout(() => {
-            navigate('/users')
-          }, 2000);
+      onSubmit={(values: PessoaDTO,
+        { setSubmitting }: FormikHelpers<PessoaDTO>
+        ) => {
+          setSubmitting(false);
+          let formataCPF = values.cpf.replaceAll('.', '')
+          let novoCPF = formataCPF.replace('-','');
+          values.cpf = novoCPF
+          let dataFormatada = values.dataNascimento.replaceAll('/', '-')
+          dataFormatada = moment(dataFormatada, 'DD/MM/YYYY').format('YYYY-MM-DD');
+          values.dataNascimento = dataFormatada
+          if (buttonName === 'Atualizar') {
+            const userAlterado = {
+              cpf: values.cpf,
+              dataNascimento: values.dataNascimento,
+              email: values.email,
+              nome: values.nome,
+            }
+            if (values.nome.toLowerCase() !== values.nome.toUpperCase() && values.nome.length > 3) {
+              putUser(userAlterado)
+              setButtonName('Cadastrar')
+            }
         } else if (buttonName === 'Cadastrar') {
           if (values.nome.toLowerCase() !== values.nome.toUpperCase() && values.nome.length > 3) {
             newUser(values);
-            setTimeout(() => {
-              navigate('/users')
-            }, 2000);
-          } else (
-            Notify.failure('Erro ao atualizar usuário!', {
-              timeout: 2000
-            })
-
-          )
+          } 
         } else {
           Notify.failure('Erro confira os campos novamente!', {
             timeout: 2000
@@ -167,7 +166,7 @@ function CreateUser() {
     {values => (
       <Form>
           <FormContainer>
-          <DivField>
+          <DivField bot='40px'>
             <LabelCreate htmlFor="nome">Nome:</LabelCreate>
             <Field id="nome" name="nome" placeholder="Digite seu Nome:" />
             {values.errors.nome && values.touched.nome ? (
@@ -176,7 +175,7 @@ function CreateUser() {
 
           </DivField>
 
-          <DivField>
+          <DivField bot='40px'>
             <LabelCreate htmlFor="cpf">CPF:</LabelCreate>
             <Field name="cpf" render={({ field }: any) => (
                   <MaskedInput
@@ -199,7 +198,7 @@ function CreateUser() {
                 ) : null}
           </DivField>
 
-          <DivField>
+          <DivField bot='40px'>
             <LabelCreate htmlFor="dataNascimento">Data de Nascimento:</LabelCreate>
             <Field name="dataNascimento" render={({ field }: any) => (
                   <MaskedInput
@@ -222,7 +221,7 @@ function CreateUser() {
                 ) : null}
           </DivField>
 
-          <DivField>
+          <DivField bot='40px'>
             <LabelCreate htmlFor="email">Email:</LabelCreate>
             <Field
               id="email"

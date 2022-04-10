@@ -1,22 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import { Formik, Field, Form, FormikHelpers } from "formik";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import * as Yup from 'yup';
+import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { AuthContext } from "../../context/AuthContext";
-import { EnderecoDTO } from "../../model/EnderecoDTO"
-import { AddressDTO } from "../../model/AddressDTO";
+import { AddressContext } from "../../context/AddressContext";
+import Loading from "../../components/Loading";
 import {
-  DivForm,
   HeadList,
   EachList,
   EachDesc,
   InfoUsers,
-  DivFormik,
-  ButtonStyled,
-  DivButtonForm,
-  ContainerForm,
   LogradouroDesc,
 } from "./Address.styles"
 
@@ -24,123 +18,45 @@ import {
   DivButton,
   TitleUsers,
   TableUsers,
+  ButtonStyled,
   ContainerUsers,
   ContainerTable,
 } from "../users/Users.styles"
 
-import Loading from "../../components/Loading";
-import api from "../../api"
 
-const SignupSchema = Yup.object().shape({
-  cep: Yup.string()
-  .min(8, 'Deve conter 9 dígitos (00000-000)')
-  .max(9, 'Deve conter 9 dígitos (00000-000)')
-  .required('Campo obrigatório!'),
-
-  logradouro: Yup.string()
-    .min(2, 'Muito Curto')
-    .max(50, 'Muito Longo')
-    .required('Campo obrigatório!'),
-
-  numero: Yup.number()
-  .max(50, 'Muito Longo!')
-  .required('Campo obrigatório!'),
-
-  localidade: Yup.string()
-  .min(3, 'Muito Curto!')
-  .max(50, 'Muito Longo!')
-  .required('Campo obrigatório!'),
-
-  uf: Yup.string()
-  .min(2, 'Deve conter apenas 2 digitos!')
-  .max(2, 'Deve conter apenas 2 digitos!')
-  .required('Campo obrigatório!'),
-
-  pais: Yup.string()
-  .min(2, 'Muito Curto!')
-  .max(50, 'Muito Longo!')
-  .required('Campo obrigatório!'),
-
-  tipo: Yup.string()
-  .required('Campo obrigatório!')
-});
 
 function Address() {
   const navigate = useNavigate()
   const {notLoged} = useContext<any>(AuthContext);
-  const [loading, setLoading] = useState(true);
-  const [address, setAddress] = useState<AddressDTO['address']>([])
-  const [buttonName, setButtonName] = useState('Cadastrar')
-  const [addressAlt, setAddressAlt] = useState({})
-
-  const getAddress = async (values: EnderecoDTO, setFieldValue: any) => {
-    try {
-      const {data} = await axios.get(`https://viacep.com.br/ws/${values.cep}/json/`)
-      const {logradouro, bairro, localidade, uf} = data
-      setFieldValue('bairro', bairro)
-      setFieldValue('logradouro', logradouro)
-      setFieldValue('localidade', localidade)
-      setFieldValue('uf', uf)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const postAddress = async (values: EnderecoDTO) => {
-    const endereco = {
-      tipo: values.tipo,
-      logradouro: `${values.logradouro} - Bairro ${values.bairro}`,
-      numero: parseInt(values.numero),
-      complemento: values.complemento,
-      cep: values.cep,
-      cidade: values.localidade,
-      estado: values.uf,
-      pais: values.pais,
-    }
-    console.log(endereco)
-    try {
-      const {data} = await api.post('endereco/2', endereco)
-      console.log(endereco)
-      console.log(data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const getAddressApi = async () => {
-    try {
-      const {data} = await api.get('endereco')
-      setAddress(data)
-      console.log(address)
-      setLoading(false)
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
-  }
-
-  const deleteAddress = async (id: number) => {
-    try {
-      await api.delete(`endereco/${id}`)
-      getAddressApi()
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const getInputAddress = (id: number) => {
-    setButtonName('Atualizar')
-    setAddressAlt(address.filter(item => item.idEndereco === id))
-    console.log(addressAlt)
-  }
+  const {getAddressApi, deleteAddress, loading, setLoading, setButtonName, address} = useContext<any>(AddressContext);
   
-  const altFormik = (FormikProps: any) => {
-
+  function handleDelete(id: number) {
+    Confirm.show(
+      'DBC',
+      'Deseja mesmo deletar o endereço?',
+      'Sim',
+      'Não',
+      () => {
+        deleteAddress(id)
+        Notify.success('Endereço deletado com sucesso!', {
+          timeout: 2000
+        });
+        getAddressApi()
+      },
+      () => {
+        Notify.failure('Deletação cancelada!', {
+          timeout: 2000
+        });
+      },
+      {
+      },
+      );
   }
+
 
   useEffect(() => {
     notLoged();
-    getAddressApi()
+    getAddressApi();
   }, []);
   
   if (loading) {
@@ -148,117 +64,12 @@ function Address() {
   }
 
   return (
-    <DivFormik>
-      <h1>Address</h1>
-      <Formik
-        initialValues={{
-          cep: '',
-          logradouro: '',
-          numero: '',
-          complemento: '',
-          bairro: '',
-          localidade: '',
-          uf: '',
-          pais: '',
-          tipo: '',
-        }}
-        validationSchema={SignupSchema}
-        onSubmit={(
-          values: EnderecoDTO,
-          { setSubmitting }: FormikHelpers<EnderecoDTO>
-          ) => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-            postAddress(values)
-            getAddressApi()
-        }}
-      >
-        { props => (
-        <Form>
-          <ContainerForm>
-            <DivForm>
-              <label htmlFor="cep">CEP</label>
-              <Field id="cep" name="cep" placeholder="CEP" />
-              <button type="button" onClick={() => getAddress(props.values, props.setFieldValue)}>Buscar CEP</button>
-              {props.errors.cep && props.touched.cep ? (
-               <div>{props.errors.cep}</div>
-              ) : null}
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="logradouro">Logradouro</label>
-              <Field id="logradouro" name="logradouro" placeholder="Logradouro" />
-              {props.errors.logradouro && props.touched.logradouro ? (
-               <div>{props.errors.logradouro}</div>
-              ) : null}
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="numero">Numero</label>
-              <Field id="numero" name="numero" placeholder="Numero" />   
-              {props.errors.numero && props.touched.numero ? (
-              <div>{props.errors.numero}</div>
-              ) : null}
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="complemento">Complemento</label>
-              <Field id="complemento" name="complemento" placeholder="Complemento" />  
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="bairro">Bairro</label>
-              <Field id="bairro" name="bairro" placeholder="Bairro" />     
-              {props.errors.bairro && props.touched.bairro ? (
-              <div>{props.errors.bairro}</div>
-              ) : null}
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="localidade">Cidade</label>
-              <Field id="localidade" name="localidade" placeholder="Cidade" />  
-              {props.errors.localidade && props.touched.localidade ? (
-              <div>{props.errors.localidade}</div>
-              ) : null}
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="uf">Estado</label>
-              <Field id="uf" name="uf" placeholder="Estado" />  
-              {props.errors.uf && props.touched.uf ? (
-              <div>{props.errors.uf}</div>
-              ) : null}
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="pais">País</label>
-              <Field id="pais" name="pais" placeholder="País" />  
-              {props.errors.pais && props.touched.pais ? (
-              <div>{props.errors.pais}</div>
-           ) : null}
-            </DivForm>
-
-            <DivForm>
-              <label htmlFor="tipo">Tipo</label>
-              <Field as="select" id="tipo" name="tipo">
-                <option value=''></option>
-                <option value="RESIDENCIAL">Residencial</option>
-                <option value="COMERCIAL">Comercial</option>
-              </Field> 
-              {props.errors.tipo && props.touched.tipo ? (
-              <div>{props.errors.tipo}</div>
-           ) : null}
-            </DivForm>
-        
-          </ContainerForm>
-
-            <DivButtonForm>
-              <ButtonStyled type="submit">{buttonName}</ButtonStyled>
-            </DivButtonForm>
-        </Form>
-        )}
-      </Formik>
-      <ContainerTable>
+    <ContainerUsers>
+          <TitleUsers>Address</TitleUsers>
+        <DivButton>
+          <ButtonStyled color="#3faf31" colorHover="#58e4ae" width="200px" height="30px" margin="0px 0px 20px 0px" type="button" onClick={() => (setButtonName('Cadastrar'), navigate("/create-address"))}>Cadastrar</ButtonStyled>
+        </DivButton>
+        <ContainerTable>
         <TableUsers>
           <HeadList>
             <EachList>CEP</EachList>
@@ -270,7 +81,7 @@ function Address() {
             <EachList>Pais</EachList>
             <EachList>Tipo</EachList>
           </HeadList>
-          {address.map(add => (
+          {address.map((add: any) => (
             <InfoUsers key={add.idEndereco}>
               <EachDesc>{add.cep}</EachDesc>
               <LogradouroDesc>{add.logradouro}</LogradouroDesc>
@@ -281,14 +92,14 @@ function Address() {
               <EachDesc>{add.pais}</EachDesc>
               <EachDesc>{add.tipo}</EachDesc>
               <DivButton>
-                {/* <ButtonUpdate type="button" onClick={() => getInputAddress(add.idEndereco)}>Atualizar</ButtonUpdate>
-                <ButtonDelete type="button" onClick={() => deleteAddress(add.idEndereco)}>Deletar</ButtonDelete> */}
+                <ButtonStyled color="#4c96eb" colorHover="#e4e725" width="120px" type="button" onClick={() => (setButtonName('Atualizar'), setLoading(true), navigate(`/create-address/${add.idEndereco}`))}>Atualizar</ButtonStyled>
+                <ButtonStyled color="#b42e2e" colorHover="#f10c0c" width="120px" type="button" onClick={() => handleDelete(add.idEndereco)}>Deletar</ButtonStyled>
               </DivButton>
             </InfoUsers>
           ))}
         </TableUsers>
       </ContainerTable>
-    </DivFormik>
+    </ContainerUsers>
   )
 }
 

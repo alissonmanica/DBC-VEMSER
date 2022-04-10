@@ -57,7 +57,7 @@ function handleDelete(id: number) {
   
   useEffect(() => {
     notLoged();
-    getUsers()
+    getUsers();
   }, []);
   
   if (loading) {
@@ -85,7 +85,7 @@ function handleDelete(id: number) {
               <EachDesc>{cpfFormat(user.cpf)}</EachDesc>
               <EachDesc>{moment(user.dataNascimento).format('DD/MM/YYYY')}</EachDesc>
               <DivButton>
-                <ButtonStyled color='#4c96eb' colorHover="#e4e725" width="120px" type="button" onClick={() => (setButtonName('Atualizar'), setLoading(true), navigate(`/create-user/${user.idPessoa}`))}>Atualizar</ButtonStyled>
+                <ButtonStyled color="#4c96eb" colorHover="#e4e725" width="120px" type="button" onClick={() => (setButtonName('Atualizar'), setLoading(true), navigate(`/create-user/${user.idPessoa}`))}>Atualizar</ButtonStyled>
                 <ButtonStyled color="#b42e2e" colorHover="#f10c0c" width="120px" type="button" onClick={() => handleDelete(user.idPessoa)}>Deletar</ButtonStyled>
               </DivButton>
             </InfoUsers>

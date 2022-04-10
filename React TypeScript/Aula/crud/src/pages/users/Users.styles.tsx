@@ -99,10 +99,12 @@ export const FormContainer = styled.div`
   box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.16);;
 `;
 
-export const DivField = styled.div`
+export const DivField = styled.div<{
+  bot?: string,
+}>`
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin-bottom: ${props => props.bot};
 
 `;
 

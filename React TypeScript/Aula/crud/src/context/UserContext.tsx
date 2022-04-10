@@ -1,6 +1,5 @@
 import {FC, createContext, useState, ReactNode } from "react";
 import api from "../api";
-import Loading from "../components/Loading";
 import { PeopleDTO } from "../model/PeopleDTO";
 
 export const UserContext = createContext({})
@@ -16,6 +15,7 @@ const UserProvider: FC<ReactNode>= ({children}) => {
       setPeople(data)
       setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
   }
@@ -29,9 +29,6 @@ const UserProvider: FC<ReactNode>= ({children}) => {
     }
   }
   
-  if (loading) {
-    return (<Loading />)
-  }
   return (
     <UserContext.Provider value={{loading, setLoading, people, deleteUsers, getUsers, buttonName, setButtonName}}>
       {children}
