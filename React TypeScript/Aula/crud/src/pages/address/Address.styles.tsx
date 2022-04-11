@@ -1,22 +1,5 @@
 import styled from 'styled-components';
 
-export const DivFormik = styled.div`
-  width: 100%;
-  padding: 20px;
-  background-color: #F7F8FC;
-`;
-
-export const DivForm = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ContainerForm = styled.form`
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 10px 50px;
-`;
-
 export const DivButtonForm = styled.div`
   display: flex;
   justify-content: center;

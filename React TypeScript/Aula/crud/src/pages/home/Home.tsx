@@ -1,32 +1,43 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { AddressContext } from "../../context/AddressContext";
+import { UserContext } from "../../context/UserContext";
 import Loading from "../../components/Loading";
 import {
   Card,
+  CardDesc,
   Container,
   CardTitle,
 } from "./Home.styles"
 
 function Home() {
   const {notLoged} = useContext<any>(AuthContext);
-  const [loading, setLoading] = useState(true)
+  const {getAddressApi, addressLength} = useContext<any>(AddressContext);
+  const {getUsers, usersLength} = useContext<any>(UserContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     notLoged();
-    setLoading(false)
+    getUsers();
+    getAddressApi();
+    setLoading(false);
   }, []);
 
   if (loading) {
-    return (<Loading />)
+    return (<Loading />);
   }
 
   return (
     <Container>
       <Card>
-        <CardTitle>Usuários</CardTitle>
+        <CardTitle>Pessoas</CardTitle>
+        <CardDesc>{usersLength}</CardDesc>
+        <span>Pessoas Cadastradas</span>
       </Card>
       <Card>
-        <CardTitle>Endereço</CardTitle>
+        <CardTitle>Endereços</CardTitle>
+        <CardDesc>{addressLength}</CardDesc>
+        <span>Endereços Cadastrados</span>
       </Card>
     </Container>
   )

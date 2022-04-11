@@ -115,3 +115,7 @@ export const LabelCreate = styled.label`
 export const InputCreate = styled.input`
   height: 22px;
 `;
+
+export const DivError = styled.div`
+  color: red;
+`;

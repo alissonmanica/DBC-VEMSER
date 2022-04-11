@@ -12,8 +12,8 @@ import { AuthContext} from '../../context/AuthContext'
 import api from '../../api';
 import Loading from '../../components/Loading';
 import {
+  DivError,
   DivField,
-  InputCreate,
   LabelCreate,
   ButtonStyled,
   FormContainer,
@@ -150,12 +150,19 @@ function CreateUser() {
             }
             if (values.nome.toLowerCase() !== values.nome.toUpperCase() && values.nome.length > 3) {
               putUser(userAlterado)
-              setButtonName('Cadastrar')
+            } else {
+              Notify.failure('Erro, digita um nome válido!', {
+                timeout: 2000
+              });
             }
         } else if (buttonName === 'Cadastrar') {
           if (values.nome.toLowerCase() !== values.nome.toUpperCase() && values.nome.length > 3) {
             newUser(values);
-          } 
+          } else {
+            Notify.failure('Erro, digita um nome válido!', {
+              timeout: 2000
+            });
+          }
         } else {
           Notify.failure('Erro confira os campos novamente!', {
             timeout: 2000
@@ -170,7 +177,7 @@ function CreateUser() {
             <LabelCreate htmlFor="nome">Nome:</LabelCreate>
             <Field id="nome" name="nome" placeholder="Digite seu Nome:" />
             {values.errors.nome && values.touched.nome ? (
-                <div>{values.errors.nome}</div>
+                <DivError>{values.errors.nome}</DivError>
                 ) : null}
 
           </DivField>
@@ -194,7 +201,7 @@ function CreateUser() {
                   />
                 )} />
             {values.errors.cpf && values.touched.cpf ? (
-                <div>{values.errors.cpf}</div>
+                <DivError>{values.errors.cpf}</DivError>
                 ) : null}
           </DivField>
 
@@ -217,7 +224,7 @@ function CreateUser() {
                   />
                 )} />
             {values.errors.dataNascimento && values.touched.dataNascimento ? (
-                <div>{values.errors.dataNascimento}</div>
+                <DivError>{values.errors.dataNascimento}</DivError>
                 ) : null}
           </DivField>
 
@@ -230,7 +237,7 @@ function CreateUser() {
               type="email"
             />
             {values.errors.email && values.touched.email ? (
-                <div>{values.errors.email}</div>
+                <DivError>{values.errors.email}</DivError>
                 ) : null}
           </DivField>
           

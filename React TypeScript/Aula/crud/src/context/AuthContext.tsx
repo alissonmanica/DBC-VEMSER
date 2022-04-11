@@ -1,14 +1,18 @@
 import {FC, createContext, useState, useEffect, ReactNode} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Notify } from 'notiflix';
+
 import { LoginDTO } from '../model/LoginDTO';
 import api from '../api';
 import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 export const AuthContext = createContext({})
 
 const AuthProvider: FC<ReactNode>= ({children}) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [isToken, setIsToken] = useState(false)
 
   useEffect(() => {
@@ -28,9 +32,14 @@ const AuthProvider: FC<ReactNode>= ({children}) => {
       api.defaults.headers.common['Authorization'] = data;
       localStorage.setItem('token', data);
       setIsToken(true)
-      navigate('/');
+      Notify.success('Logado com sucesso!', {
+        timeout: 1000
+      });
+      navigate('/')
       setLoading(false)
     } catch (error) {
+      setLoading(false)
+      setError(true)
       console.log(error);
     }
   }
@@ -51,6 +60,10 @@ const AuthProvider: FC<ReactNode>= ({children}) => {
 
   if (loading) {
     return (<Loading />)
+  }
+
+  if (error) {
+    return (<Error />)
   }
 
   return (

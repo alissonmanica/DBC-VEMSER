@@ -15,6 +15,7 @@ import {
 } from "./Address.styles";
 
 import {
+  DivError,
   DivField,
   ButtonStyled,
   FormContainer,
@@ -224,7 +225,7 @@ function CreateAddress() {
                 )}/>
               <button type="button" onClick={() => getAddress(props.values, props.setFieldValue)}>Buscar CEP</button>
               {props.errors.cep && props.touched.cep ? (
-               <div>{props.errors.cep}</div>
+               <DivError>{props.errors.cep}</DivError>
               ) : null}
             </DivField>
 
@@ -232,7 +233,7 @@ function CreateAddress() {
               <label htmlFor="logradouro">Logradouro</label>
               <Field id="logradouro" name="logradouro" placeholder="Logradouro" />
               {props.errors.logradouro && props.touched.logradouro ? (
-               <div>{props.errors.logradouro}</div>
+               <DivError>{props.errors.logradouro}</DivError>
               ) : null}
             </DivField>
 
@@ -240,7 +241,7 @@ function CreateAddress() {
               <label htmlFor="numero">Numero</label>
               <Field id="numero" name="numero" placeholder="Numero" />   
               {props.errors.numero && props.touched.numero ? (
-              <div>{props.errors.numero}</div>
+              <DivError>{props.errors.numero}</DivError>
               ) : null}
             </DivField>
 
@@ -253,7 +254,7 @@ function CreateAddress() {
               <label htmlFor="localidade">Cidade</label>
               <Field id="localidade" name="localidade" placeholder="Cidade" />  
               {props.errors.localidade && props.touched.localidade ? (
-              <div>{props.errors.localidade}</div>
+              <DivError>{props.errors.localidade}</DivError>
               ) : null}
             </DivField>
 
@@ -261,7 +262,7 @@ function CreateAddress() {
               <label htmlFor="uf">Estado</label>
               <Field id="uf" name="uf" placeholder="Estado" />  
               {props.errors.uf && props.touched.uf ? (
-              <div>{props.errors.uf}</div>
+              <DivError>{props.errors.uf}</DivError>
               ) : null}
             </DivField>
 
@@ -269,7 +270,7 @@ function CreateAddress() {
               <label htmlFor="pais">País</label>
               <Field id="pais" name="pais" placeholder="País" />  
               {props.errors.pais && props.touched.pais ? (
-              <div>{props.errors.pais}</div>
+              <DivError>{props.errors.pais}</DivError>
            ) : null}
             </DivField>
 
@@ -281,7 +282,7 @@ function CreateAddress() {
                 <option value="COMERCIAL">Comercial</option>
               </Field> 
               {props.errors.tipo && props.touched.tipo ? (
-              <div>{props.errors.tipo}</div>
+              <DivError>{props.errors.tipo}</DivError>
            ) : null}
             </DivField>
           <DivButtonForm>

@@ -1,9 +1,9 @@
-import {ContainerLoading, ImageLogin} from './Loading.styles'
+import {ContainerLoading, ImageLoading} from './Loading.styles'
 
 function Loading() {
   return (
     <ContainerLoading>
-      <ImageLogin />
+      <ImageLoading />
       <h1>Loading...</h1>
     </ContainerLoading>
   )
